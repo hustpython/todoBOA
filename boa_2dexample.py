@@ -30,17 +30,17 @@ def plot3d():
 
     plt.show()
 #plot3d()
-def target_Rastrigin(x1,x2,x3):
+def target_Rastrigin(x1,x2,x3,x4):
     result = 0.0
-    for i in [x1,x2,x3]:
+    for i in [x1,x2,x3,x4]:
         result += np.power(i, 2) - \
             5*np.cos(2*np.pi*i)+5
+    #return -result
     return 1.0/(1.0+result)
-
-bo = BayesianOptimization(target_Rastrigin, {'x1': (-3.2, 3.2),'x2':(-3.2,3.2),'x3':(-3.2,3.2)})
+bo = BayesianOptimization(target_Rastrigin, {'x1': (-3,3),'x2':(-3,3),'x3':(-3,3),'x4':(-3,3)})
 gp_params = {"alpha": 1e-3, "n_restarts_optimizer":3}
-bo.maximize(init_points=100,n_iter=300,acq='ucb',kappa=5,**gp_params)
+#bo.maximize(init_points=100,n_iter=300,acq='ucb',kappa=5)
 #bo.maximize(init_points=50,n_iter=100,acq='ucb',kappa=20)
-#bo.maximize(init_points=50,n_iter=200,acq="ei", xi=0.1, **gp_params)
-#bo.maximize(init_points=50, n_iter=30, acq="poi", xi=0.1, **gp_params)
-#bo.maximize(init_points=100, n_iter=50, kappa=5)
+#bo.maximize(init_points=500,n_iter=200,acq="ei", xi=0.1, **gp_params)
+#bo.maximize(init_points=50, n_iter=20, acq="poi", xi=0.1, **gp_params)
+bo.maximize(init_points=5000, n_iter=50, acq='ucb',kappa=1)
